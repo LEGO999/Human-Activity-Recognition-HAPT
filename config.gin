@@ -1,0 +1,10 @@
+
+# When tuning is false, the default parameters belows will be used.
+main.tuning = False
+
+# Preset parameters are the best parameters we searched from Bayesian Optimization
+main.unit = 48
+main.learning_rate = 0.0012
+main.dropout = 0.08
+main.num_epoch = 5
+
