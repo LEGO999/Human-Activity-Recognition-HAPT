@@ -16,7 +16,7 @@ Project is created with:
 Human Activities and Postural Transitions Dataset (HAPT)
 
 ## Usage
-Unzip hapt_tfrecords.zip in a folder called hapt_tfrecords in the root directory of HAPT. Manipulate confin.gin to switch from different modes. And use```main.py``` to start the program.
+Unzip hapt_tfrecords.7z in a folder called hapt_tfrecords in the root directory of HAPT. Manipulate confin.gin to switch from different modes. And use```main.py``` to start the program.
 
 ### Tuning Mode
 Under this mode, no checkpoint will be saved and nothing will be visualized. And Bayesian Optimization will be executed.
