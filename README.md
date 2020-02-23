@@ -41,6 +41,7 @@ main.dropout = 0.08
 main.num_epoch = 5
 ```
 
+
 ## Authors
-* Cao Shijia, scarlettcao95@gmail.com
-* Zhong Liangyu, @LEGO999, zhonglyu00@gmail.com
+- CAO Shijia, https://github.com/scarlettcao
+- ZHONG Liangyu, https://github.com/LEGO999
