@@ -1,14 +1,14 @@
 # Human Activity Recognition
 Human Activity Recognition (HAR) based on sensory data is an active research field of classifying data recorded by sensors into known well-defined movements. A challenging problem is dealing with the large number of time-series data and finding a clear way to match data to corresponding movements. We propose a generic framework to predict sequences of human activities from sequences of inertial sensor data. 
 
-Please check all the details in ```HAPT_paper.pdf```.
+Please check further details in ```HAPT_paper.pdf```.
 ## Table of contents
-* Technologies
+* Dependancy
 * Dataset
 * Usage
 * Authors
 
-## Technologies
+## Dependancy
 Project is created with:
 - Python 3.6
 - Tensorflow 2.0.0
@@ -17,7 +17,7 @@ Project is created with:
 Human Activities and Postural Transitions Dataset (HAPT)
 
 ## Usage
-Unzip hapt_tfrecords.7z in a folder called hapt_tfrecords in the root directory of HAPT. Manipulate confin.gin to switch from different modes. And use```python3 main.py``` to start the program.
+Unzip hapt_tfrecords.7z in a folder called hapt_tfrecords in the root directory of HAPT. Manipulate ```confin.gin``` to switch from different modes. And use```python3 main.py``` to start the program.
 
 ### Tuning Mode
 Under this mode, no checkpoint will be saved and nothing will be visualized. And Bayesian Optimization will be executed.
@@ -41,8 +41,19 @@ main.learning_rate = 0.0012
 main.dropout = 0.08
 main.num_epoch = 5
 ```
-
-
+## Used Tricks
+* TF-Records
+* GRU Network
+* AutoGraph
+* Bayesian Opimization
+## Results
+### Confusion matrix
+![Conmat](https://github.com/LEGO999/Human-Activaity-Recognition-HAPT/blob/master/ConMat.PNG)  
+Final accuracy on test set: 92.4%.
+### Visualization
+For two random segments:
+![visual1](https://github.com/LEGO999/Human-Activaity-Recognition-HAPT/blob/master/visualization/20200211-112221.png)
+![visual2](https://github.com/LEGO999/Human-Activaity-Recognition-HAPT/blob/master/visualization/20200210-213757.png)
 ## Authors
 - CAO Shijia, https://github.com/scarlettcao
 - ZHONG Liangyu, https://github.com/LEGO999
