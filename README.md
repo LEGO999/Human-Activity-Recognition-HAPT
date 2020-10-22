@@ -2,6 +2,7 @@
 Human Activity Recognition (HAR) based on sensory data is an active research field of classifying data recorded by sensors into known well-defined movements. A challenging problem is dealing with the large number of time-series data and finding a clear way to match data to corresponding movements. We propose a generic framework to predict sequences of human activities from sequences of inertial sensor data. 
 
 Please check further details in ```HAPT_paper.pdf```.
+**Code is hidden. Preventing some new student from simply copying and pasting. **
 
 ## Dataset
 Human Activities and Postural Transitions Dataset (HAPT)
@@ -45,7 +46,25 @@ fewer parameters than LSTM, which will make it converge faster and make it less 
 |Dense(unit=16), ReLU|
 |Dense(unit=12), Softmax|
 
-##
+## Implementation details
+**Optimizer**   Adam
+**Metrics**  Confusion matrix and accuracy
+**Loss** Cross-entropy loss
+**Training Procedure** Since there is some unlabeled data in our dataset, we manually annotate the labels of these data
+as all zero vectors. And we use ont-hot coding of labeled data in our training procedure. The cross-entropy loss of zero vector will be zero. So unlabeled data won’t have generate any loss. To improve the performance of our network, we use drop out in GRU layers and fully-connected layers. And we set an
+unified dropout rate as a hyperparameter. We will try our network for 5 epochs and test our network after 5 epochs of
+training.
+##  Hyperparameter tuning
+Manually selecting hyperparameters strongly depends on human’s experience. Grid search is time-consuming and not
+feasible. After consideration, we take Bayesian Optimization as our method of hyperparameter tuning. We have the
+following hyperparameters and their range:
+* Unit of GRU layers from 16 to 64
+* Unit of the first fully-connected layer from 16 to 64
+* Drop out rate of GRU layers and fully-connected layers from 0.0 to 0.4
+* Learning rate of optimizer from 1e-2 to 1e-5
+For convenience, the first GRU layer always have two times so many units as the second GRU layer, and first dense
+layer have same number of neurons as the second GRU layer. And we select 5 exploits and 5 explores (in total 10
+iterations) as the hyperparameter of our Bayesian Optimization.
 
 
 ## Dependancy
@@ -54,10 +73,12 @@ Project is created with:
 - Tensorflow 2.0.0
 
 ## Usage
-Unzip hapt_tfrecords.7z in a folder called hapt_tfrecords in the root directory of HAPT. Manipulate ```confin.gin``` to switch from different modes. And use```python3 main.py``` to start the program.
+**Code is hidden.**
+~~Unzip hapt_tfrecords.7z in a folder called hapt_tfrecords in the root directory of HAPT. Manipulate ```confin.gin``` to switch from different modes. And use```python3 main.py``` to start the program.~~
 
 ### Tuning Mode
-Under this mode, no checkpoint will be saved and nothing will be visualized. And Bayesian Optimization will be executed.
+**Code is hidden.**
+~~Under this mode, no checkpoint will be saved and nothing will be visualized. And Bayesian Optimization will be executed.~~
 ```
 main.tuning = True
 
@@ -68,7 +89,8 @@ main.num_epoch = 5 #the epochs you want to run#
 ```
 
 ### Non-tuning Mode
-Under this mode, you will have control of the hyperparameters for a single run. Checkpoints will be saved for every 5 epochs. If there is previous checkpoint, it'll be restored automatically. A random segment of sequence in test set will be visualized.
+**Code is hidden.**
+~~Under this mode, you will have control of the hyperparameters for a single run. Checkpoints will be saved for every 5 epochs. If there is previous checkpoint, it'll be restored automatically. A random segment of sequence in test set will be visualized.~~
 ```
 main.tuning = False
 
@@ -84,9 +106,29 @@ main.num_epoch = 5
 * AutoGraph
 * Bayesian Opimization
 ## Results
+### Bayesian Optimization
+| **Iteration** |**Dropout**|**Learning Rate**|**Unit**|**Test Accuracy**|
+|:------:|:------:|:------:|:------:|:------:|
+|GRU-1| 0.1668| 0.002804 |30 |91.10%|
+|GRU-2|  0.0587| 0.009078| 32 |54.5%|
+|GRU-3|0.1587 |0.004617 |48 |69.26%|
+|GRU-4| 0.08178 |0.001228| 48| **92.40%**|
+|GRU-5| 0.1669 |0.004419 |25 |88.64%|
+|GRU-6| 0.1669 |1e-05 |64 |80.79%|
+|GRU-7| 0.03255 |1e-05| 16 |55.6%|
+|GRU-8|0.3989 |1e-05 |41 |71.3%|
+|GRU-9| 0.000896| 1e-05 |58 |78.82%|
+|GRU-10| 0.4 |1e-05 |20 |51.98%|
+|LSTM-1|  0.08178 |0.001228 |48 |**92.07%**|
+
+With same hyperparameters of our GRU network, we try replacing GRU layer in our network with LSTM layer. The
+result in table 2 shows that LSTM network does have similar performance as GRU network. But we did observe slower
+convergence during the training, which will be more serious when we train network on a large data set.
 ### Confusion matrix
 ![Conmat](https://github.com/LEGO999/Human-Activaity-Recognition-HAPT/blob/master/ConMat.PNG)  
 Final accuracy on test set: 92.4%.
+The result shows that the our network is effective to predict the static and dynamic activities but not to postural
+transitions between the static activities. In future we could work on that using e.g. oversampling or using weighted loss for different classes.
 ### Visualization
 For two random segments:
 ![visual1](https://github.com/LEGO999/Human-Activaity-Recognition-HAPT/blob/master/visualization/20200211-112221.png)
