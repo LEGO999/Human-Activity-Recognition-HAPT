@@ -1,8 +1,8 @@
 # Human Activity Recognition
 Human Activity Recognition (HAR) based on sensory data is an active research field of classifying data recorded by sensors into known well-defined movements. A challenging problem is dealing with the large number of time-series data and finding a clear way to match data to corresponding movements. We propose a generic framework to predict sequences of human activities from sequences of inertial sensor data. 
 
-Please check further details in ```HAPT_paper.pdf```.
-**Code is hidden. Preventing some new student from simply copying and pasting. **
+Please check further details in ```HAPT_paper.pdf```.  
+**Code is hidden. Preventing some new students from simply copying and pasting.**
 
 ## Dataset
 Human Activities and Postural Transitions Dataset (HAPT)
